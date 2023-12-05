@@ -1,0 +1,149 @@
+{{#section 'js'}}
+<script type="text/javascript">
+function validate(){
+    if ($('#ma').val().length===0){
+        alert('Vui lòng nhập khóa sách bạn muốn thêm hoặc chỉnh sủa');
+            return false
+    }
+    return true;
+}
+</script>
+{{/section}}
+{{#if showError}}
+<div class="alert alert-danger">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Error!</strong> {{errorMsg}}
+</div>
+{{/if}}
+<div class="container sp">
+    <div>
+    <form method="POST"  role="form" onsubmit="return validate();">
+            <div class="mod-login">
+    <div class="mod-input mod-login-input-name mod-input-name">
+                        <label style="font-size: 14px">Mã ISBN</label>
+                    <input type="number" placeholder="Nhập mã sách" data-meta="Field" name="ma" id="ma">
+                        <b></b>
+                        <span></span>
+                    </div>
+    <div class="form-row subscribe-outer" style="width: 18%;margin-left: 300px;margin-top: 10px">
+        <button type="submit" class="button-default ygradient1 ">Cập nhật sản phẩm</button>
+    </div>
+    </form>
+    </div>
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table id="example1" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Mã sách</th>
+                            <th>Tên sách</th>
+                            <th>Nhà xuất bản</th>
+                            <th>Năm xuất bản</th>
+                            <th>Giá bán</th>
+                            <th>Số lượng</th>
+                            {{!-- <th>Sửa</th>
+                            <th>Xóa</th> --}}
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each Book}}
+
+                        <tr>
+                            <td>{{ISBN}} </td>
+                            <td>{{Name}} </td>
+                            <td>{{PubName}}</td>
+                            <td>{{Year}}</td>
+                            <td>{{Cost}} đ </td>
+                            <td>{{amount}}</td>
+                            {{!-- {{!-- <td>
+                                <a class="btn" href="/manager/sanpham/edit?id={{idSach}}" role="button" style="background-color: gold">
+                                    Sửa
+                                </a>
+                            </td> --}}
+                            <td>
+                                <a class="btn" href="/staff/book/update?id={{ISBN}}" role="button" style="background-color: gold">
+                                    Cập nhật
+                                </a>
+                                </td>
+                            </td>                       
+                               
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                   
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <!--<button class="btn btn-info" href="/SP/add"type="button">Thêm </button>-->
+
+
+</div>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Bạn có chắc chắn muốn xóa thông tin sách này khỏi danh sách không?</h3>
+            </div>
+
+            <div class="">
+                <button style="margin-left:400px;margin-top: 20px" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+
+                <form action="" method="POST" role="form" style="margin-left:500px;margin-top: -34px;margin-bottom: 18px">
+                    <input type="hidden" id="" name="idSach" value="{{idSach}}">
+                    <button type="submit" class="btn btn-danger">
+                        Okay
+                    </button>
+                </form>
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Okay</button>-->
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- jQuery 3 -->
+
+
+
+{{#section 'js'}}
+<script src="/phantrang/jquery.min.js"></script>
+<script src="/phantrang/bootstrap.min.js"></script>
+<script src="/phantrang/jquery.dataTables.min.js"></script>
+<script src="/phantrang/dataTables.bootstrap.min.js"></script>
+<script src="/dist/js/adminlte.min.js"></script>
+
+<script>
+    $(function () {
+        $('#example1').DataTable({
+            'paging': true,
+            'lengthChange': true,
+            'searching': false,
+            'ordering': true,
+            'info': true,
+            'autoWidth': true,
+            'language': {
+                "lengthMenu": "Hiển thị _MENU_ dòng",
+                "info": "Đang hiển thị _START_ tới _END_ tổng số _TOTAL_ kết quả",
+                "paginate": {
+                    "first": "Trang đầu",
+                    "last": "Trang cuối",
+                    "next": "Tiếp",
+                    "previous": "Trước"
+                }
+            }
+        });
+    });
+    $(function () {
+        //Date picker
+        $('#datepicker').datepicker({
+            autoclose: true
+        });
+    });
+    //Initialize Select2 Elements
+    $('.select2').select2();
+</script> {{/section}}
